@@ -1,0 +1,8 @@
+db query
+
+guestbook table 생성 board database에
+
+			String username = "jspexam";
+			String pw = "jsppw";
+			
+create database
