@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	                    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	                    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!-- 1. HandlerMapping 등록 -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login.do">login</prop>
+				<prop key="/getBoardList.do">getBoardList</prop>
+				<prop key="/addBoard.do">addBoard</prop>
+				<prop key="/getBoard.do">getBoard</prop>
+				<prop key="/updateBoard.do">updateBoard</prop>
+				<prop key="/deleteBoard.do">deleteBoard</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 2. Controller들 등록 -->
+	<bean id="login" class="com.multicampus.view.user.LoginController"/>
+	<bean id="getBoardList" class="com.multicampus.view.board.GetBoardListController"/>
+	<bean id="addBoard" class="com.multicampus.view.board.AddBoardController"/>
+	<bean id="getBoard" class="com.multicampus.view.board.GetBoardController"/>
+	<bean id="updateBoard" class="com.multicampus.view.board.UpdateBoardController"/>
+	<bean id="deleteBoard" class="com.multicampus.view.board.DeleteBoardController"/>
+	
+	<!-- 3. ViewResolver 등록 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

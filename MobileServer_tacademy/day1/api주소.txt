@@ -1,0 +1,36 @@
+기상청 날씨주소
+http://www.kma.go.kr/XML/weather/sfc_web_map.xml
+
+naver 오타변환(테스트키)
+http://openapi.naver.com/search?key=c1b406b32dbbbbeee5f2a36ddc14067f&query=spdlqj&target=errata
+ㄴkey=id역할(세션쿠키보다)
+
+naver 영화 검색(테스트키)
+http://openapi.naver.com/search?key=c1b406b32dbbbbeee5f2a36ddc14067f&query=영화&display=10&start=1&target=movie
+ 
+
+SKPlanetx 멜론 실시간검색
+http://apis.skplanetx.com/melon/charts/realtime?count=10&page=1&version=1&appKey=31c1e579-b9c2-3697-95d3-ed1ba8a82815&format=xml
+
+SKPlanetx 날씨 실시간검색
+http://apis.skplanetx.com/weather/current/hourly?lon=&village=석촌동&county=송파구&lat=&city=서울&version=1&appKey=31c1e579-b9c2-3697-95d3-ed1ba8a82815
+
+
+SKPlanetx 11번가 notebook  실시간 상품 검색
+http://apis.skplanetx.com/11st/common/products?count=10&page=1&searchKeyword=notebook&sortCode=CP&option=&version=1&appKey=31c1e579-b9c2-3697-95d3-ed1ba8a82815&format=xml
+
+
+MSN 날씨(성남) xml api
+http://weather.service.msn.com/data.aspx?weadegreetype=C&culture=ko-KR&weasearchstr=%EC%84%B1%EB%82%A8
+
+MSN 날씨(seoul)xml api
+http://weather.service.msn.com/data.aspx?weadegreetype=C&culture=ko-KR&weasearchstr=seoul
+
+실제 정보 주소
+http://weather.kr.msn.com/local/%ec%84%9c%ec%9a%b8/?wealocations=wc:KSXX0037&q=%EC%84%9C%EC%9A%B8
+
+이미지 주소
+http://wst.s-msn.com/i/ko/tmw/   +  skycodeday + _2x.png
+
+http://wst.s-msn.com/i/ko/tmw/32.png  
+http://wst.s-msn.com/i/ko/tmw/32_2x.png   2배 확대 이미지

@@ -1,0 +1,27 @@
+		
+		
+		
+		String sql = "";		
+		StringBuilder sb = new StringBuilder("select title,count,price,image,category  from product ");
+		
+		try{
+			con = JDBCUtil.getConnection();
+		    if(!key.equals("empty")){
+		    	sb.append("where title like '%" + tKey + "%' ");
+		    	if(!category.equals("0")){
+		    		sb.append("and category = '" + category + "'");
+		    	}
+		    }else{
+		    	if(!category.equals("0")){
+		    		sb.append("where category = '" + category + "'");
+		    	}
+		    }
+		    sql = sb.toString();
+			System.out.println("클래스 로딩 성공 con : " + con);
+			System.out.println("sql : " + sql);
+
+
+
+		String key = request.getParameter("key");		
+		byte[] arr = key.getBytes("iso-8859-1");
+		String tKey = new String(arr,"UTF-8");

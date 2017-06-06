@@ -1,0 +1,73 @@
+쿠키 저장 위치
+C:\Users\Soonrok\AppData\Roaming\Microsoft\Windows\Cookies
+
+
+
+
+사용자 추가 하는 소스
+
+
+insert into user values ('%', 'kimjw', password('1234'),'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','','','','',0,0,0,0,'','','Y');
+
+user 에게 원격 접속 권한 추가
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '1234';
+flush privileges;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '1234';
+flush privileges;
+
+접속하기
+
+ mysql -u 사용자명
+
+
+현재 유정 확인하기 
+
+select user();
+
+command 접속하기  
+mysql -u 사용자명 -p 데이터베이스명
+
+암호 변경하기
+
+mysql> update user set password=password(‘new-passwd’) where user=’root’;
+mysql> flush privileges;
+
+
+현재 유저 암호 변경하기
+
+set password for root=password(‘new-passwd’);
+
+DROP TABLE MEMBER;
+DROP TABLE BOARD;
+
+CREATE TABLE MEMBER(
+	NUM INT(10) NOT NULL AUTO_INCREMENT,
+	ID varchar(10),
+	NAME VARCHAR(20),
+	PASSWORD VARCHAR(8),
+	ROLE VARCHAR(5),
+	PRIMARY KEY(NUM)
+);
+
+INSERT INTO MEMBER(id, password, name, role) VALUES('test', 'test', '김재웅', 'Admin');
+INSERT INTO MEMBER(id, password, name, role) VALUES('aaa', 'aaa', '홍길동', 'User');
+
+CREATE TABLE BOARD(
+	SEQ INT(5) PRIMARY KEY  AUTO_INCREMENT,
+	TITLE VARCHAR(200),
+	WRITER VARCHAR(20),
+	CONTENT VARCHAR(2000),
+	REGDATE  DATETIME default now(),
+	CNT INT(5) DEFAULT 0
+);
+
+INSERT INTO BOARD( TITLE, WRITER, CONTENT) 
+VALUES( '첫인사', '김재웅', '시작이 반입니다.');
+
+COMMIT;
+
+
+select * from BOARD;
+select * from MEMBER;

@@ -1,0 +1,8 @@
+
+boardDAO는 sql실행하는내용을 담은 do 메서드들
+board-mapping
+<!-- (dao에 있던 이름들) ibatis의 sql함수의 인자, board table sql query-->
+user-mapping
+<!-- user table sql query -->
+sql-map-config
+<!-- ibatis이용 db 정보, board mapping.xml, user-mapping.xml을 불러옴 -->
