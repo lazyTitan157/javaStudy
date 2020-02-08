@@ -27,6 +27,8 @@
 ![image](https://user-images.githubusercontent.com/8167433/74086994-b8f37180-4acb-11ea-9a16-d2d34ccb3446.png)
 
 
-## 3. board : visiting book
+## 3. board (visiting book)
+    guestboard, board-app
+    
     - spring 활용
     - Reference : 최범균의 JSP 2.3 웹 프로그래밍 기초부터 중급까지
