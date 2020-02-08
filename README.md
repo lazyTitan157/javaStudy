@@ -1,4 +1,4 @@
-# javaStudy
+# Java Study
 
 ## 1. java libraries :
     - String
@@ -21,8 +21,7 @@
      - 클라이언트측(ChatC) Data  setting 
      - info, help, user관련 profile 페이지 구현
      - 이모티콘 기능 구현 등 데이터 수집 및 DB 구축
-     
-     ![image](https://user-images.githubusercontent.com/8167433/74086994-b8f37180-4acb-11ea-9a16-d2d34ccb3446.png)
+ ![image](https://user-images.githubusercontent.com/8167433/74086994-b8f37180-4acb-11ea-9a16-d2d34ccb3446.png)
 
 
 ## 3. board : visiting book
