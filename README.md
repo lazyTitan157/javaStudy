@@ -7,7 +7,7 @@
     - Vector
     - network
 
-## 2. chat program 
+## 2. Chat program ```swingStudy```
 * 프로젝트 소개
 
     Java socket programming을 이용한 채팅프로그램으로 이모티콘 보내기 기능, 이미지 및 파일 전송 기능, 채팅방 공지사항 기능 등을 가지고 있으며 각각의 사용자의 프로필 또한 설정할 수 있다.
