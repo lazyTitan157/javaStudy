@@ -15,7 +15,8 @@ import kr.or.connect.domain.Board;
 
 /**
  * @author 2983r
- * 데이터를 읽어오는 책임을 BookService라는 클래스에 부여: @Service (Spring에서 component scan의 대상으로 인지되는 애너테이션)
+ * 데이터를 읽어오는 책임을 Service 클래스에 부여: 
+ * @Service (Spring에서 component scan의 대상으로 인지되는 애너테이션)
  */
 @Service
 public class BoardService {
@@ -40,8 +41,8 @@ public class BoardService {
 	}
 
 	/**
-	 * Book데이터 입력 메서드
-	 * @param book
+	 * 데이터 입력 메서드
+	 * @param board
 	 * @return
 	 */
 	public Board create(Board board) {
@@ -52,8 +53,8 @@ public class BoardService {
 	}
 	
 	/**
-	 * Book데이터 수정 메서드
-	 * @param book
+	 * 데이터 수정 메서드
+	 * @param board
 	 * @return
 	 */
 	public Board update(Board board) {
@@ -62,7 +63,7 @@ public class BoardService {
 	}
 	
 	/**
-	 * Book데이터 삭제 메서드
+	 * 데이터 삭제 메서드
 	 * @param id
 	 * @return
 	 */

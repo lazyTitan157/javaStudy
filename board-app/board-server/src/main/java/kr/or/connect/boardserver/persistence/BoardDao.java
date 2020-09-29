@@ -19,9 +19,9 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.domain.Board;
 
 /**
- * DataSource 구현체로 교체하는 일이 생기더라도 BookDao는 수정할 부분이 없도록 만든다.
+ * DataSource 구현체로 교체하는 일이 생기더라도 BoardDao는 수정할 부분이 없도록 만든다.
  * @Repository : Spring에서 'component scan' 대상인 클래스를 표시하기 위해 제공하는 애너테이션
- * 이 클래스의 동작은 BookLauncher에서 검증
+ * 이 클래스의 동작은 Launcher에서 검증
  */
 @Repository
 public class BoardDao {
@@ -31,8 +31,16 @@ public class BoardDao {
 	//테이블을 id로 조회하는 쿼리
 	private static final String SELECT_BY_ID =
 			"SELECT id, title, author, contents, writeDate FROM board where id = :id";
-	
 
+	private static final String DELETE_BY_ID = "DELETE FROM board WHERE id= :id";
+
+	private static final String UPDATE =
+			"UPDATE board SET\n"
+			+ "title = :title,"
+			+ "author = :author,"
+			+ "contents = :contents\n"
+			+ "WHERE id = :id";
+	
 	private SimpleJdbcInsert insertAction; //to insert
 	public BoardDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -70,7 +78,6 @@ public class BoardDao {
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
 	
-	private static final String DELETE_BY_ID = "DELETE FROM board WHERE id= :id";
 	/**
 	 * Board data 1건 삭제
 	 * @param id
@@ -81,12 +88,6 @@ public class BoardDao {
 		return jdbc.update(DELETE_BY_ID, params);
 	}
 	
-	private static final String UPDATE =
-			"UPDATE board SET\n"
-			+ "title = :title,"
-			+ "author = :author,"
-			+ "contents = :contents\n"
-			+ "WHERE id = :id";
 	/**
 	 * 테이블 업데이트
 	 * @param board

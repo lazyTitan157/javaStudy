@@ -12,8 +12,38 @@
 
   <script type="text/javascript">
   $(document).ready(function(){
+    // $.get("/api/board/1",function(data){
+    //   $('#printTest').html(data);}, "json"
+    // // );
+    // $.getJSON(
+    //   "/api/board/1",
+    //   function(data){
+    //     $.each(data.items, function(i,item){
+    //         alert("get item"+item);
+    //       });
+    //   }, "json"
+    // );
+    /** 게시글 한개 가져오기 : json**/
+    // $.ajax({
+    //   type: 'GET',
+    //   url:"/api/board/3",
+    //   dataType: "json",
+    //   success: function(jsondata){
+    //     //alert("ajax: "+JSON.stringify(jsondata));
+    //     jsondata = JSON.stringify(jsondata);
+    //     var pitems = JSON.parse(jsondata);
+    //     //var pitems = jsondata.items
+    //     //$("#jsondataTable > tbody:first").append('<tr><th scope="row">'+pitems['id']+'</th><td><a href="#" id="editBtn" data-toggle="modal" data-target="#editModalLong">'+pitems['title']+'</a></td><td>'+pitems['author']+'</td><td>'+pitems['writeDate']+'</td></tr>');
+    //     $('#editAuthor').val(pitems.author);
+    //     $('#editTitle').val(JSON.parse(jsondata).title);
+    //     $('#editContents').val(pitems.contents);
+    //     $("#editId").val(pitems.id);
+    //   }
+    // });
+
     /** 모든 게시글 가져오기 : json **/
     read();
+
   })
   </script>
 </head>
@@ -77,19 +107,19 @@
                 <form id="saveFrm">
                   <div class="form-group">
                     <label for="author" class="col-form-label">Writer:</label>
-                    <input type="text" class="form-control" id="authorSave">
+                    <input type="text" class="form-control" id="author">
                   </div>
                   <div class="form-group">
                     <label for="title" class="col-form-label">Title:</label>
-                    <input type="test" class="form-control" id="titleSave">
+                    <input type="test" class="form-control" id="title">
                   </div>
                   <div class="form-group">
                     <label for="contents" class="col-form-label">Contents:</label>
-                    <textarea class="form-control" id="contentsSave"></textarea>
+                    <textarea class="form-control" id="contents"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="writeDate" class="col-form-label">Date:</label>
-                    <input type="text" class="form-control" id="writeDateSave">
+                    <input type="text" class="form-control" id="writeDate">
                   </div>
                 </form>
               </div>
@@ -177,15 +207,30 @@
   <script>
   const url='http://localhost:8080/api/board'
 
-  //모달 사용예시
+  // $.ajax({
+  //   type:"GET",
+  //   contentType: "application/json",
+  //   url:url+'/1',
+  //   success:function(args){
+  //     // $("#printTest").html(args);
+  //   },
+  //   //       beforeSend:showRequest,
+  //   error:function(e){
+  //     alert(e.responseText);
+  //   }
+  // });
   $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
   })
   $(document).on('show.bs.modal', '#editModalLong', function () {
   })
 
-  //edit modal popup
   function modalPop(obj){
+    //$(obj)
+    //$('#editId').val($(obj).attr('data-id'));
+    //alert('pop');
+    //$('#editTitle').val($(obj).parent().parent().children()[3].text());
+    //$('#editContents').val();
 
     $.ajax({
       type: 'GET',
@@ -196,13 +241,14 @@
         jsondata = JSON.parse(jsondata);
         $('#editId').val(jsondata.id);
         $('#editAuthor').text(jsondata.author);
+        //$.each(JSON.parse(jsondata), function(i,item){
         $('#editTitle').val(jsondata.title);
         $('#editContents').val(jsondata.contents);
+        //$('#editAuthor').text(jsondata.author);
       }
     });
   }
 
-  //게시판 목록 가져오기
   function read(){
     $.ajax({
       type: 'GET',
@@ -222,9 +268,9 @@
     });
 
   }
-
-  //게시물 삭제 1건
+  //$("#deleteBtn").click(function(){
   function deleteBtn(obj){
+    //var url="http://localhost:8080/api/board";
     $.ajax({
       type:"DELETE",
       url:url+"/"+$(obj).parent().parent().children()[0].innerHTML,
@@ -238,11 +284,11 @@
     });
   }
 
-  //게시글 1건 수정
   $("#updateBtn").click(function(e){
+    //var url="http://localhost:8080/api/board";
+    //$("#editContents").val()
     var updatedata = '{"title":"'+document.getElementById('editTitle').value+'", "author":"'+$("#editAuthor").text()+'","contents":"'+document.getElementById('editContents').value+'"}';
     $("#editModalLong").modal('hide');
-
     /** 게시글 한개 수정하기 **/
     $.ajax({
       type: "PUT",
@@ -253,13 +299,44 @@
         alert("updated");
         //$("#printTest").text( JSON.stringify(jsondata)); //??
         read();
+        /*
+        $.ajax({
+          type: 'GET',
+          url:"/api/board",
+          dataType: "json",
+          success: function(jsondata){
+            //alert("ajax: "+JSON.stringify(jsondata));
+            jsondata = JSON.stringify(jsondata);
+            var pitems = JSON.parse(jsondata);
+            //var pitems = jsondata.items
+            $("#jsondataTable > tbody").empty();
+            $.each(pitems, function(i,item){
+              $("#jsondataTable > tbody").append('<tr><th scope="row">'+item.id
+              +'</th><td><a href="#" id="editBtn" data-id="'+item.id+'" data-toggle="modal" data-target="#editModalLong">'+item.title
+              +'</a></td><td>'+item.author+'</td><td>'+item['writeDate']
+              +'</td><td><button type="button" class="btn btn-secondary" onclick="deleteBtn(this);" id="deleteBtn">delete</button></td></tr>');
+            });
+            // $('#editAuthor').val(pitems.author);
+            // $('#editTitle').val(JSON.parse(jsondata).title);
+            // $('#editContents').val(pitems.contents);
+          }
+        });
+        */
       }
     });
   });
 
-//새 글 저장
 $("#saveBtn").click(function(){
-  var data = '{"title":"'+document.getElementById('titleSave').value+'", "author":"'+document.getElementById('authorSave').value+'", "writeDate":"'+document.getElementById('writeDateSave').value+'", "contents":"conetens"}'
+    //var url="http://localhost:8080/api/board";
+    /*
+    var data = {
+    authorr: "writer",
+    writerDate: "2019-03-13",
+    title: "title",
+    contents: "contents"
+  }*/
+  //var data = $("#saveFrm").serialize()
+  var data = '{"title":"'+document.getElementById('title').value+'", "author":"'+document.getElementById('author').value+'", "writeDate":"312", "contents":"conetens"}'
   //alert(data);
   $('#exampleModalLong').modal('hide');
   $.ajax({
@@ -269,17 +346,39 @@ $("#saveBtn").click(function(){
     data:data,
     success:function(args){
       read();
-
-      $('#authorSave').val("");
-      $('#writeDateSave').val("");
-      $('#titleSave').val("");
-      $('#contentsSave').val("");
+      // $.ajax({
+      //   type: 'GET',
+      //   url:"/api/board",
+      //   dataType: "json",
+      //   success: function(jsondata){
+      //     //alert("ajax: "+JSON.stringify(jsondata));
+      //     jsondata = JSON.stringify(jsondata);
+      //     var pitems = JSON.parse(jsondata);
+      //     //var pitems = jsondata.items
+      //     $("#jsondataTable > tbody").empty();
+      //     $.each(pitems, function(i,item){
+      //       $("#jsondataTable > tbody").append('<tr><th scope="row">'+item.id
+      //       +'</th><td><a href="#" id="editBtn" data-id="'+item.id+'" data-toggle="modal" data-target="#editModalLong">'+item.title
+      //       +'</a></td><td>'+item.author+'</td><td>'+item['writeDate']
+      //       +'</td><td><button type="button" class="btn btn-secondary" onclick="deleteBtn(this);" id="deleteBtn">delete</button></td></tr>');
+      //     });
+      //     // $('#editAuthor').val(pitems.author);
+      //     // $('#editTitle').val(JSON.parse(jsondata).title);
+      //     // $('#editContents').val(pitems.contents);
+      //   }
+      // });
     },
     //       beforeSend:showRequest,
     error:function(e){
       alert(e.responseText);
     }
   });
+  /*
+  //$("#saveFrm").serialize()
+  $.post(url, $("#saveFrm").serialize(), function(data, status){
+  console.log(`${data} and status is ${status}`)
+}, "json");
+*/
 })
 
 </script>
