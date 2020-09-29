@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <title>API 자동진단 솔루션</title>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+    // $.get("/api/board/1",function(data){
+    //   $('#printTest').html(data);}, "json"
+    // // );
+    // $.getJSON(
+    //   "/api/board/1",
+    //   function(data){
+    //     $.each(data.items, function(i,item){
+    //         alert("get item"+item);
+    //       });
+    //   }, "json"
+    // );
+    /** 게시글 한개 가져오기 : json**/
+    // $.ajax({
+    //   type: 'GET',
+    //   url:"/api/board/3",
+    //   dataType: "json",
+    //   success: function(jsondata){
+    //     //alert("ajax: "+JSON.stringify(jsondata));
+    //     jsondata = JSON.stringify(jsondata);
+    //     var pitems = JSON.parse(jsondata);
+    //     //var pitems = jsondata.items
+    //     //$("#jsondataTable > tbody:first").append('<tr><th scope="row">'+pitems['id']+'</th><td><a href="#" id="editBtn" data-toggle="modal" data-target="#editModalLong">'+pitems['title']+'</a></td><td>'+pitems['author']+'</td><td>'+pitems['writeDate']+'</td></tr>');
+    //     $('#editAuthor').val(pitems.author);
+    //     $('#editTitle').val(JSON.parse(jsondata).title);
+    //     $('#editContents').val(pitems.contents);
+    //     $("#editId").val(pitems.id);
+    //   }
+    // });
+
+    /** 모든 게시글 가져오기 : json **/
+    read();
+
+  })
+  </script>
+</head>
+<body>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="index.html">API 자동진단</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="jobs.html">Jobs <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="projects.html">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="boards.html">Boards</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Settings
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Sign In
+      </span>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <br/>
+    <div class="jumbotron">
+      <h1 class="display-4">게시판 만들기</h1>
+      <p class="lead">연습연습연습</p>
+      <hr class="my-4">
+      <p>아침먹고땡</p>
+      <p class="lead">
+        <!--글쓰기 버튼 클릭시 모달 Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModalLong">
+          새 글쓰기
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="saveFrm">
+                  <div class="form-group">
+                    <label for="author" class="col-form-label">Writer:</label>
+                    <input type="text" class="form-control" id="author">
+                  </div>
+                  <div class="form-group">
+                    <label for="title" class="col-form-label">Title:</label>
+                    <input type="test" class="form-control" id="title">
+                  </div>
+                  <div class="form-group">
+                    <label for="contents" class="col-form-label">Contents:</label>
+                    <textarea class="form-control" id="contents"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="writeDate" class="col-form-label">Date:</label>
+                    <input type="text" class="form-control" id="writeDate">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="saveBtn">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </p>
+    </div>
+  </div>
+
+
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">게시판</li>
+        <li class="breadcrumb-item active" aria-current="page">메인</li>
+      </ol>
+    </nav>
+
+    <!-- 게시판 글 목록 -->
+    <table class="table" id="jsondataTable">
+      <thead class="thead-dark"> <!-- "thead-light"-->
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">writeDate</th>
+          <th scope="col">삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <!--수정 버튼 클릭시 edit modal -->
+    <!-- Modal -->
+    <div class="editmodal modal fade" id="editModalLong" tabindex="-1" role="dialog" aria-labelledby="editModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLongTitle">Edit Modal</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="saveFrm">
+              <input type="hidden" id="editId" value="value"/>
+              <div class="form-group">
+                <label for="author" class="col-form-label">Writer:</label>
+                <p id="editAuthor"></p>
+              </div>
+              <div class="form-group">
+                <label for="title" class="col-form-label">Edit Title:</label>
+                <input type="text" class="form-control" id="editTitle" value="test">
+              </div>
+              <div class="form-group">
+                <label for="contents" class="col-form-label">Contents:</label>
+                <textarea class="form-control" id="editContents"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="updateBtn">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label for="printTest" class="col-form-label">1 of them: </label>
+    <p id="printTest">test</p>
+
+    <label for="printAllTest" class="col-form-label">All of them: </label>
+    <p id="printAllTest">test</p>
+
+  </div>
+
+  <script>
+  const url='http://localhost:8080/api/board'
+
+  // $.ajax({
+  //   type:"GET",
+  //   contentType: "application/json",
+  //   url:url+'/1',
+  //   success:function(args){
+  //     // $("#printTest").html(args);
+  //   },
+  //   //       beforeSend:showRequest,
+  //   error:function(e){
+  //     alert(e.responseText);
+  //   }
+  // });
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+  $(document).on('show.bs.modal', '#editModalLong', function () {
+  })
+
+  function modalPop(obj){
+    //$(obj)
+    //$('#editId').val($(obj).attr('data-id'));
+    //alert('pop');
+    //$('#editTitle').val($(obj).parent().parent().children()[3].text());
+    //$('#editContents').val();
+
+    $.ajax({
+      type: 'GET',
+      url:"/api/board/"+$(obj).attr('data-id'),
+      dataType: "json",
+      success: function(jsondata){
+        jsondata = JSON.stringify(jsondata);
+        jsondata = JSON.parse(jsondata);
+        $('#editId').val(jsondata.id);
+        $('#editAuthor').text(jsondata.author);
+        //$.each(JSON.parse(jsondata), function(i,item){
+        $('#editTitle').val(jsondata.title);
+        $('#editContents').val(jsondata.contents);
+        //$('#editAuthor').text(jsondata.author);
+      }
+    });
+  }
+
+  function read(){
+    $.ajax({
+      type: 'GET',
+      url:"/api/board",
+      dataType: "json",
+      success: function(jsondata){
+        jsondata = JSON.stringify(jsondata);
+        $("#printAllTest").text( jsondata );
+        $("#jsondataTable > tbody").empty();
+        $.each(JSON.parse(jsondata), function(i,item){
+          $("#jsondataTable > tbody:first").append('<tr><th scope="row">'
+          +item.id+'</th><td><a href="#" id="editBtn" onclick="modalPop(this)" data-id="'+item.id+'" data-toggle="modal" data-target="#editModalLong">'
+          +item.title+'</a></td><td>'+item.author+'</td><td>'
+          +item['writeDate']+'</td><td><button type="button" class="btn btn-secondary" onclick="deleteBtn(this);" id="deleteBtn">delete</button></td></tr>');
+        });
+      }
+    });
+
+  }
+  //$("#deleteBtn").click(function(){
+  function deleteBtn(obj){
+    //var url="http://localhost:8080/api/board";
+    $.ajax({
+      type:"DELETE",
+      url:url+"/"+$(obj).parent().parent().children()[0].innerHTML,
+      success:function(args){
+        alert("deleted");
+        read();
+      },
+      error:function(e){
+        alert(e.responseText);
+      }
+    });
+  }
+
+  $("#updateBtn").click(function(e){
+    //var url="http://localhost:8080/api/board";
+    //$("#editContents").val()
+    var updatedata = '{"title":"'+document.getElementById('editTitle').value+'", "author":"'+$("#editAuthor").text()+'","contents":"'+document.getElementById('editContents').value+'"}';
+    $("#editModalLong").modal('hide');
+    /** 게시글 한개 수정하기 **/
+    $.ajax({
+      type: "PUT",
+      contentType: "application/json",
+      url:url+"/"+document.getElementById('editId').value,
+      data:updatedata,
+      success: function(jsondata, status){
+        alert("updated");
+        //$("#printTest").text( JSON.stringify(jsondata)); //??
+        read();
+        /*
+        $.ajax({
+          type: 'GET',
+          url:"/api/board",
+          dataType: "json",
+          success: function(jsondata){
+            //alert("ajax: "+JSON.stringify(jsondata));
+            jsondata = JSON.stringify(jsondata);
+            var pitems = JSON.parse(jsondata);
+            //var pitems = jsondata.items
+            $("#jsondataTable > tbody").empty();
+            $.each(pitems, function(i,item){
+              $("#jsondataTable > tbody").append('<tr><th scope="row">'+item.id
+              +'</th><td><a href="#" id="editBtn" data-id="'+item.id+'" data-toggle="modal" data-target="#editModalLong">'+item.title
+              +'</a></td><td>'+item.author+'</td><td>'+item['writeDate']
+              +'</td><td><button type="button" class="btn btn-secondary" onclick="deleteBtn(this);" id="deleteBtn">delete</button></td></tr>');
+            });
+            // $('#editAuthor').val(pitems.author);
+            // $('#editTitle').val(JSON.parse(jsondata).title);
+            // $('#editContents').val(pitems.contents);
+          }
+        });
+        */
+      }
+    });
+  });
+
+$("#saveBtn").click(function(){
+    //var url="http://localhost:8080/api/board";
+    /*
+    var data = {
+    authorr: "writer",
+    writerDate: "2019-03-13",
+    title: "title",
+    contents: "contents"
+  }*/
+  //var data = $("#saveFrm").serialize()
+  var data = '{"title":"'+document.getElementById('title').value+'", "author":"'+document.getElementById('author').value+'", "writeDate":"312", "contents":"conetens"}'
+  //alert(data);
+  $('#exampleModalLong').modal('hide');
+  $.ajax({
+    type:"POST",
+    contentType: "application/json",
+    url:url,
+    data:data,
+    success:function(args){
+      read();
+      // $.ajax({
+      //   type: 'GET',
+      //   url:"/api/board",
+      //   dataType: "json",
+      //   success: function(jsondata){
+      //     //alert("ajax: "+JSON.stringify(jsondata));
+      //     jsondata = JSON.stringify(jsondata);
+      //     var pitems = JSON.parse(jsondata);
+      //     //var pitems = jsondata.items
+      //     $("#jsondataTable > tbody").empty();
+      //     $.each(pitems, function(i,item){
+      //       $("#jsondataTable > tbody").append('<tr><th scope="row">'+item.id
+      //       +'</th><td><a href="#" id="editBtn" data-id="'+item.id+'" data-toggle="modal" data-target="#editModalLong">'+item.title
+      //       +'</a></td><td>'+item.author+'</td><td>'+item['writeDate']
+      //       +'</td><td><button type="button" class="btn btn-secondary" onclick="deleteBtn(this);" id="deleteBtn">delete</button></td></tr>');
+      //     });
+      //     // $('#editAuthor').val(pitems.author);
+      //     // $('#editTitle').val(JSON.parse(jsondata).title);
+      //     // $('#editContents').val(pitems.contents);
+      //   }
+      // });
+    },
+    //       beforeSend:showRequest,
+    error:function(e){
+      alert(e.responseText);
+    }
+  });
+  /*
+  //$("#saveFrm").serialize()
+  $.post(url, $("#saveFrm").serialize(), function(data, status){
+  console.log(`${data} and status is ${status}`)
+}, "json");
+*/
+})
+
+</script>
+<!-- JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
